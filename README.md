@@ -6,7 +6,11 @@
 </p>
 
 
-# 📒 Sketchbook
+# 📒 SketchbookNEW
+
+this is from the original sketchbook project, I'm maintaining it now.
+It is still a very fun project to play with.
+
 
 Simple web based game engine built on [three.js](https://github.com/mrdoob/three.js) and [cannon.js](https://github.com/schteppe/cannon.js) focused on third-person character controls and related gameplay mechanics.
 
