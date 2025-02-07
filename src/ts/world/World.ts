@@ -32,6 +32,8 @@ import { Scenario } from './Scenario';
 import { Sky } from './Sky';
 import { Ocean } from './Ocean';
 
+import * as GaussianSplats3D from '@mkkellogg/gaussian-splats-3d';
+
 export class World
 {
 	public renderer: THREE.WebGLRenderer;
@@ -108,6 +110,35 @@ export class World
 		// Three.js scene
 		this.graphicsWorld = new THREE.Scene();
 		this.camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1010);
+
+		// 3dgs build/assets/tamigs30k_decapitated.splat
+		const gs_viewer = new GaussianSplats3D.DropInViewer({ 
+			'antialiased': true,
+			'sphericalHarmonicsDegree': 2
+		 });
+
+		gs_viewer.addSplatScenes([
+			{
+				'path': 'build/assets/tami_verydense.splat',
+				'rotation': [0, 0, 1, 0],
+				'scale': [3, 3, 3],
+				'position': [0, 17, 0],
+				'splatAlphaRemovalThreshold': 5
+			}
+		]);
+	
+
+		this.graphicsWorld.add(gs_viewer);
+
+		// 3dgs Visualization (Temporary)
+		//const vis_geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		//const vis_material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+		//const vis_cube = new THREE.Mesh( vis_geometry, vis_material );
+		//vis_cube.position.set(0, 20, 0); // Match the position of the second splat scene
+		//vis_cube.scale.set(1.5, 5.5, 1.5); // Match the scale
+		//this.graphicsWorld.add(vis_cube);
+		
+		
 
 		// Passes
 		let renderPass = new RenderPass( this.graphicsWorld, this.camera );
@@ -282,6 +313,7 @@ export class World
 
 		// Logic
 		world.update(timeStep, unscaledTimeStep);
+		world.updatePlayerPosition();
 
 		// Measuring logic time
 		this.logicDelta = this.clock.getDelta();
@@ -518,14 +550,24 @@ export class World
 					</a>
 				</div>
 				<div class="left-panel">
+					<div id="player-position" class="panel-segment">Position: 0, 0, 0</div>
 					<div id="controls" class="panel-segment flex-bottom"></div>
 				</div>
 			</div>
 		`).appendTo('body');
 
+
 		// Canvas
 		document.body.appendChild(this.renderer.domElement);
 		this.renderer.domElement.id = 'canvas';
+	}
+
+	private updatePlayerPosition(): void {
+		const position = this.camera.position;
+		const x = position.x.toFixed(2);
+		const y = position.y.toFixed(2);
+		const z = position.z.toFixed(2);
+		document.getElementById('player-position').innerHTML = `Position: ${x}, ${y}, ${z}`;
 	}
 
 	private createParamsGUI(scope: World): void

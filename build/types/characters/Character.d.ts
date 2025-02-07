@@ -13,6 +13,7 @@ import { Vehicle } from '../vehicles/Vehicle';
 import { CapsuleCollider } from '../physics/colliders/CapsuleCollider';
 import { VehicleEntryInstance } from './VehicleEntryInstance';
 import { GroundImpactData } from './GroundImpactData';
+import { AnimationClip } from 'three';
 import { EntityType } from '../enums/EntityType';
 export declare class Character extends THREE.Object3D implements IWorldEntity {
     updateOrder: number;
@@ -22,7 +23,8 @@ export declare class Character extends THREE.Object3D implements IWorldEntity {
     modelContainer: THREE.Group;
     materials: THREE.Material[];
     mixer: THREE.AnimationMixer;
-    animations: any[];
+    animations: AnimationClip[];
+    actionClips: {};
     acceleration: THREE.Vector3;
     velocity: THREE.Vector3;
     arcadeVelocityInfluence: THREE.Vector3;
@@ -58,8 +60,10 @@ export declare class Character extends THREE.Object3D implements IWorldEntity {
     occupyingSeat: VehicleSeat;
     vehicleEntryInstance: VehicleEntryInstance;
     private physicsEnabled;
+    private preStep;
+    private postStep;
     constructor(gltf: any);
-    setAnimations(animations: []): void;
+    setAnimations(animations: any[]): void;
     setArcadeVelocityInfluence(x: number, y?: number, z?: number): void;
     setViewVector(vector: THREE.Vector3): void;
     /**
@@ -87,6 +91,7 @@ export declare class Character extends THREE.Object3D implements IWorldEntity {
     displayControls(): void;
     inputReceiverUpdate(timeStep: number): void;
     setAnimation(clipName: string, fadeIn: number): number;
+    setWeight(action: any, weight: number): void;
     springMovement(timeStep: number): void;
     springRotation(timeStep: number): void;
     getLocalMovementDirection(): THREE.Vector3;

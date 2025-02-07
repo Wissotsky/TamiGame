@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import { World } from './World';
 import { EntityType } from '../enums/EntityType';
 import { IUpdatable } from '../interfaces/IUpdatable';
-import { default as CSM } from 'three-csm';
+//import { default as CSM } from 'three-csm';
+import { CSM,CMSMode } from 'three/examples/jsm/csm/CSM.js';
 
 export class Sky extends THREE.Object3D implements IUpdatable
 {
@@ -75,14 +76,14 @@ export class Sky extends THREE.Object3D implements IUpdatable
 		};
 
 		this.csm = new CSM({
-			fov: 80,
-			far: 300,	// maxFar
+			//fov: 80,
+			maxFar: 300,	// maxFar
 			lightIntensity: 0.8,
 			cascades: 3,
 			shadowMapSize: 4096,
 			camera: world.camera,
 			parent: world.graphicsWorld,
-			mode: 'custom',
+			mode: 'custom' as CMSMode,
 			customSplitsCallback: splitsCallback
 		});
 		this.csm.fade = false;
@@ -98,7 +99,8 @@ export class Sky extends THREE.Object3D implements IUpdatable
 		this.position.copy(this.world.camera.position);
 		this.refreshSunPosition();
 
-		this.csm.update(this.world.camera.matrix);
+		//this.csm.update(this.world.camera.matrix);
+		this.csm.update();
 		this.csm.lightDirection = new THREE.Vector3(-this.sunPosition.x, -this.sunPosition.y, -this.sunPosition.z).normalize();
 	}
 

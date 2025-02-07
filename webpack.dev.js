@@ -11,5 +11,9 @@ module.exports = merge(common, {
     static: {
       directory: path.join(__dirname),
     },
+    headers: {
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+    }  
   },
 });

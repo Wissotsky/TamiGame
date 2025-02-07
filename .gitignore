@@ -1,3 +1,5 @@
 .vscode
 node_modules
 .idea
+build/assets/tami_verydense.splat
+build/assets/tamigs30k_decapitated.splat

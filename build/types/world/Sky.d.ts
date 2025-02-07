@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { World } from './World';
 import { IUpdatable } from '../interfaces/IUpdatable';
-import { default as CSM } from 'three-csm';
+import { CSM } from 'three/examples/jsm/csm/CSM.js';
 export declare class Sky extends THREE.Object3D implements IUpdatable {
     updateOrder: number;
     sunPosition: THREE.Vector3;
