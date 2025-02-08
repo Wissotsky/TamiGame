@@ -119,7 +119,7 @@ export class World
 
 		gs_viewer.addSplatScenes([
 			{
-				'path': 'build/assets/tami_verydense.splat',
+				'path': 'build/assets/tamigs30k_decapitated.splat',
 				'rotation': [0, 0, 1, 0],
 				'scale': [3, 3, 3],
 				'position': [0, 17, 0],
