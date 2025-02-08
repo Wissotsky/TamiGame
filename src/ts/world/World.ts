@@ -8,6 +8,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { FXAAShader  } from 'three/examples/jsm/shaders/FXAAShader';
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass';
 
 import { Detector } from '../../lib/utils/Detector';
 import { Stats } from '../../lib/utils/Stats';
@@ -143,6 +144,7 @@ export class World
 		// Passes
 		let renderPass = new RenderPass( this.graphicsWorld, this.camera );
 		let fxaaPass = new ShaderPass( FXAAShader );
+		let outputPass = new OutputPass(); // Create OutputPass
 
 		// FXAA
 		let pixelRatio = this.renderer.getPixelRatio();
@@ -153,6 +155,7 @@ export class World
 		this.composer = new EffectComposer( this.renderer );
 		this.composer.addPass( renderPass );
 		this.composer.addPass( fxaaPass );
+		this.composer.addPass(outputPass); // Add OutputPass to the composer
 
 		// Physics
 		this.physicsWorld = new CANNON.World();
